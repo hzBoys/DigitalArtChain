@@ -9,7 +9,7 @@ const jetBrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jet
 
 export const metadata: Metadata = {
   title: 'KaryaChain — Bukti Digital, Tanpa Perantara',
-  description: 'Catat sidik jari kriptografi karya digital di Arbitrum. File asli tetap privat di perangkat Anda; bukti dapat diverifikasi publik.',
+  description: 'Buat bukti digital dengan fingerprint SHA-256. File asli tetap privat di perangkat; identitas karya dapat diverifikasi.',
   generator: 'KaryaChain',
   icons: {
     icon: [

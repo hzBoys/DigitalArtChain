@@ -12,8 +12,6 @@ export const metadata: Metadata = {
 export default async function VerifyPage({ searchParams }: { searchParams: Promise<{ hash?: string }> }) {
   const { hash } = await searchParams
   const initialHash = hash && /^0x[\da-fA-F]{64}$/.test(hash) ? hash.toLowerCase() : ''
-  const mockMode = process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false'
-
   return (
     <>
       <Navbar />
@@ -25,7 +23,6 @@ export default async function VerifyPage({ searchParams }: { searchParams: Promi
             <h1>Bukti yang bisa diperiksa siapa saja.</h1>
             <p>Tidak perlu login atau menghubungkan dompet. Masukkan fingerprint dan periksa timestamp secara publik.</p>
           </div>
-          <span className={`mode-badge${mockMode ? ' is-mock' : ' is-live'}`}><span />{mockMode ? 'MODE SIMULASI' : 'PEMERIKSAAN PUBLIK'}</span>
         </div>
         <VerifierCard initialHash={initialHash} />
       </main>

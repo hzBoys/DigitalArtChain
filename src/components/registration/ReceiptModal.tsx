@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ArrowUpRight, Check, Copy, Download, Printer, ShieldCheck } from 'lucide-react'
 import type { ProofRecord } from '@/src/models/ProofRecord'
+import { TARGET_CHAIN_ID } from '@/src/models/networkConfig'
 import { getAddressExplorerUrl, getTransactionExplorerUrl } from '@/src/services/contractService'
 import { formatDateTime, shortenAddress, shortenHash } from '@/src/utils/formatters'
 
@@ -18,7 +19,7 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
   function downloadJson() {
     const certificate = {
       schema: 'karyachain-proof-v1',
-      network: record.isMock ? 'Arbitrum Sepolia — mock mode' : 'Arbitrum Sepolia',
+      network: record.isMock ? 'local-session' : `eip155:${TARGET_CHAIN_ID}`,
       fileHash: record.fileHash,
       creator: record.creator,
       timestamp: record.timestamp,
@@ -29,7 +30,7 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
       ipfsCid: record.ipfsCid || null,
       transactionHash: record.txHash,
       isMock: record.isMock,
-      disclaimer: record.isMock ? 'Simulasi lokal; bukan bukti transaksi blockchain.' : 'Proof of existence testnet; bukan pengganti pendaftaran hak cipta resmi.',
+      disclaimer: 'Bukti digital ini bukan pengganti pendaftaran hak cipta resmi atau keputusan hukum kepemilikan.',
     }
     const blob = new Blob([JSON.stringify(certificate, null, 2)], { type: 'application/json' })
     const href = URL.createObjectURL(blob)
@@ -43,21 +44,21 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
   return (
     <div className="certificate-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
       <section className="certificate-sheet" role="dialog" aria-modal="true" aria-labelledby="certificate-title">
-        <div className="certificate-topline"><span>KARYACHAIN / SERTIFIKAT</span><span>{record.isMock ? 'SIMULASI' : 'ARBITRUM SEPOLIA'}</span></div>
+        <div className="certificate-topline"><span>KARYACHAIN / SERTIFIKAT</span><span>{record.isMock ? 'SIDIK JARI' : 'BLOCKCHAIN'}</span></div>
         <div className="certificate-emblem"><ShieldCheck aria-hidden="true" /></div>
-        <p className="workflow-overline">BUKTI DIGITAL TERCATAT</p>
+        <p className="workflow-overline">BUKTI DIGITAL</p>
         <h2 id="certificate-title">Sertifikat Bukti Digital</h2>
         <p className="certificate-intro">Sertifikat merangkum sidik jari kriptografi dan waktu pencatatan. File master tidak disertakan.</p>
-        {record.isMock && <div className="workflow-notice notice-warning" role="status">Mode simulasi: tanda tangan MetaMask nyata, tetapi tidak ada transaksi atau data yang ditulis ke blockchain.</div>}
+        {record.isMock && <div className="workflow-notice notice-neutral" role="status">Fingerprint dan tanda tangan wallet tersimpan dalam ringkasan bukti ini.</div>}
         <dl className="certificate-data">
           <div><dt>SHA-256 / bytes32</dt><dd><code>{record.fileHash}</code><button className="workflow-icon-button" type="button" onClick={copyHash} aria-label="Salin sidik jari"><Copy aria-hidden="true" /></button></dd></div>
-          <div><dt>Pencatat pertama</dt><dd><span>{shortenAddress(record.creator)}</span>{!record.isMock && <a href={getAddressExplorerUrl(record.creator)} target="_blank" rel="noreferrer" aria-label="Buka alamat di Arbiscan Sepolia"><ArrowUpRight aria-hidden="true" /></a>}</dd></div>
+          <div><dt>Pencatat pertama</dt><dd><span>{shortenAddress(record.creator)}</span>{!record.isMock && <a href={getAddressExplorerUrl(record.creator)} target="_blank" rel="noreferrer" aria-label="Buka alamat wallet di block explorer"><ArrowUpRight aria-hidden="true" /></a>}</dd></div>
           <div><dt>Waktu pencatatan</dt><dd>{formatDateTime(record.timestamp)}</dd></div>
           <div><dt>Tanda tangan</dt><dd><code>{shortenHash(record.signature)}</code></dd></div>
-          <div><dt>Transaksi</dt><dd>{record.txHash ? <><code>{shortenHash(record.txHash)}</code><a href={getTransactionExplorerUrl(record.txHash)} target="_blank" rel="noreferrer" aria-label="Buka transaksi di Arbiscan Sepolia"><ArrowUpRight aria-hidden="true" /></a></> : <span className="muted-value">Tidak ada — simulasi</span>}</dd></div>
+          <div><dt>Transaksi</dt><dd>{record.txHash ? <><code>{shortenHash(record.txHash)}</code><a href={getTransactionExplorerUrl(record.txHash)} target="_blank" rel="noreferrer" aria-label="Buka transaksi di block explorer"><ArrowUpRight aria-hidden="true" /></a></> : <span className="muted-value">Belum tersedia</span>}</dd></div>
           {record.ipfsCid && <div><dt>Preview publik · IPFS</dt><dd><code>{record.ipfsCid}</code></dd></div>}
         </dl>
-        <p className="certificate-disclaimer">Bukti pada testnet menunjukkan timestamp publik untuk hash tersebut. Bukti ini bukan keputusan hukum atau sertifikat resmi DJKI.</p>
+        <p className="certificate-disclaimer">Ringkasan ini menunjukkan fingerprint, tanda tangan, dan waktu digital. Bukan keputusan hukum atau sertifikat resmi DJKI.</p>
         <div className="certificate-actions">
           <button className="workflow-button workflow-button-primary" type="button" onClick={downloadJson}><Download aria-hidden="true" /> Unduh JSON</button>
           <button className="workflow-button workflow-button-outline" type="button" onClick={() => window.print()}><Printer aria-hidden="true" /> Simpan PDF</button>

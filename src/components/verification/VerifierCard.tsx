@@ -57,9 +57,9 @@ export function VerifierCard({ initialHash = '' }: { initialHash?: string }) {
   return (
     <section className="verify-layout" aria-labelledby="verify-title">
       <div className="verify-panel">
-        <div className="workflow-panel-kicker"><FileSearch aria-hidden="true" /> {process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false' ? 'SIMULASI LOKAL · TANPA DOMPET' : 'VERIFIKASI PUBLIK · TANPA DOMPET'}</div>
+        <div className="workflow-panel-kicker"><FileSearch aria-hidden="true" /> VERIFIKASI BUKTI · TANPA DOMPET</div>
         <h2 id="verify-title">Periksa bukti sebuah karya.</h2>
-        <p>Unggah file untuk menghitung sidik jarinya di browser, atau tempel hash SHA-256. {process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false' ? 'Mode simulasi hanya membaca catatan di tab ini.' : 'Pemeriksaan blockchain bersifat publik dan gratis.'}</p>
+        <p>Unggah file untuk menghitung sidik jarinya di browser, atau tempel hash SHA-256. Pemeriksaan membandingkan fingerprint dengan catatan yang tersedia.</p>
         <label className="workflow-field-label" htmlFor="verification-hash">Hash SHA-256</label>
         <div className="verify-input-row">
           <input id="verification-hash" className="workflow-input" value={value} onChange={(event) => setValue(event.target.value)} placeholder="0x…" autoComplete="off" spellCheck={false} />
@@ -80,12 +80,11 @@ export function VerifierCard({ initialHash = '' }: { initialHash?: string }) {
         {!record && !searched && !busy && !error && (
           <div className="verify-empty"><span className="verify-empty-icon"><Fingerprint aria-hidden="true" /></span><strong>Menunggu sidik jari</strong><span>Hasil pemeriksaan akan tampil di sini.</span></div>
         )}
-        {busy && <div className="verify-empty"><LoaderCircle className="workflow-spinner" aria-hidden="true" /><strong>{process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false' ? 'Memeriksa simulasi…' : 'Memeriksa blockchain…'}</strong><span>{process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false' ? 'Pencarian lokal di sesi tab ini sedang diproses.' : 'Permintaan baca tanpa gas sedang diproses.'}</span></div>}
-        {searched && !record && <div className="verify-empty not-found"><span className="verify-empty-icon"><FileSearch aria-hidden="true" /></span><strong>{process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false' ? 'Tidak ditemukan di sesi ini' : 'Belum ada bukti terdaftar'}</strong><span>{process.env.NEXT_PUBLIC_USE_MOCK_CONTRACT !== 'false' ? 'Catatan simulasi tidak tersimpan setelah sesi tab ditutup atau dimuat ulang.' : 'Hash ini tidak ditemukan pada kontrak Arbitrum Sepolia yang terhubung.'}</span></div>}
+        {busy && <div className="verify-empty"><LoaderCircle className="workflow-spinner" aria-hidden="true" /><strong>Memeriksa bukti…</strong><span>Mencari fingerprint pada catatan yang tersedia.</span></div>}
+        {searched && !record && <div className="verify-empty not-found"><span className="verify-empty-icon"><FileSearch aria-hidden="true" /></span><strong>Bukti belum ditemukan</strong><span>Hash ini belum tercatat pada sumber yang sedang digunakan.</span></div>}
         {record && (
           <div className="verification-record">
-            <div className="verification-status"><span className="status-pulse" />{record.isMock ? 'DITEMUKAN · SIMULASI LOKAL' : 'BUKTI DITEMUKAN DI BLOCKCHAIN'}</div>
-            {record.isMock && <div className="workflow-notice notice-warning">Catatan simulasi hanya tersimpan di tab browser ini; ini bukan bukti blockchain.</div>}
+            <div className="verification-status"><span className="status-pulse" />BUKTI DITEMUKAN</div>
             <h3>{record.title || 'Karya terdaftar'}</h3>
             <dl className="verification-data">
               <div><dt>Sidik jari SHA-256</dt><dd><code>{shortenHash(record.fileHash)}</code></dd></div>
@@ -93,10 +92,10 @@ export function VerifierCard({ initialHash = '' }: { initialHash?: string }) {
               <div><dt>Waktu UTC</dt><dd>{formatDateTime(record.timestamp)}</dd></div>
               {record.category && <div><dt>Kategori</dt><dd>{record.category}</dd></div>}
               {record.ipfsCid && <div><dt>Preview publik</dt><dd><a href={`https://gateway.pinata.cloud/ipfs/${record.ipfsCid}`} target="_blank" rel="noreferrer">Buka preview <ArrowUpRight aria-hidden="true" /></a></dd></div>}
-              {record.txHash && <div><dt>Transaksi</dt><dd><a href={`${EXPLORER_URL}/tx/${record.txHash}`} target="_blank" rel="noreferrer">Buka di Arbiscan <ArrowUpRight aria-hidden="true" /></a></dd></div>}
+              {record.txHash && <div><dt>Transaksi blockchain</dt><dd><a href={`${EXPLORER_URL}/tx/${record.txHash}`} target="_blank" rel="noreferrer">Buka transaksi <ArrowUpRight aria-hidden="true" /></a></dd></div>}
               <div><dt>Tanda tangan pemilik</dt><dd><code>{shortenHash(record.signature)}</code></dd></div>
             </dl>
-            <p className="certificate-disclaimer">Timestamp testnet membuktikan data sudah tercatat pada waktu tersebut; hasil ini bukan sertifikat resmi DJKI atau keputusan kepemilikan hukum.</p>
+            <p className="certificate-disclaimer">Bukti ini merangkum fingerprint dan tanda tangan digital; bukan pengganti pendaftaran hak cipta resmi atau keputusan hukum kepemilikan.</p>
           </div>
         )}
       </div>

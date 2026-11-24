@@ -6,7 +6,7 @@ import { RegistrationWorkspace } from '@/src/components/registration/Registratio
 
 export const metadata: Metadata = {
   title: 'Daftarkan Karya — KaryaChain',
-  description: 'Hitung fingerprint SHA-256 secara lokal dan catat bukti waktu karya digital di Arbitrum Sepolia.',
+  description: 'Hitung fingerprint SHA-256 secara lokal dan siapkan bukti waktu untuk karya digital Anda.'
 }
 
 export default function RegisterPage() {

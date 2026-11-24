@@ -8,7 +8,7 @@ import { useFileHasher } from '@/src/controllers/useFileHasher'
 import { FileDropzone } from '@/src/components/registration/FileDropzone'
 import { ReceiptModal } from '@/src/components/registration/ReceiptModal'
 import { StepStatus } from '@/src/components/registration/StepStatus'
-import { ARBITRUM_SEPOLIA, METAMASK_DOWNLOAD_URL } from '@/src/models/networkConfig'
+import { METAMASK_DOWNLOAD_URL } from '@/src/models/networkConfig'
 import { WORK_CATEGORIES, type ProofRecord, type RegistrationUiState, type WorkCategory } from '@/src/models/ProofRecord'
 import { ProofServiceError, deployProofContract, getConfiguredContractAddress, isMockContract, registerProof, verifyWork } from '@/src/services/contractService'
 
@@ -18,7 +18,7 @@ const stateLabels: Partial<Record<RegistrationUiState, string>> = {
   UPLOADING_PREVIEW: 'Mengunggah preview ber-watermark ke IPFS…',
   AWAITING_SIGNATURE: 'Konfirmasi tanda tangan di MetaMask…',
   AWAITING_TX_APPROVAL: 'Konfirmasi transaksi di MetaMask…',
-  MINING: 'Menunggu konfirmasi Arbitrum Sepolia…',
+  MINING: 'Menunggu konfirmasi blockchain…',
 }
 
 export function RegistrationWorkspace() {
@@ -75,12 +75,12 @@ export function RegistrationWorkspace() {
     setError(null)
     setDuplicateRecord(null)
     if (!wallet.isConnected) {
-      setError('Hubungkan MetaMask terlebih dahulu untuk menandatangani bukti.')
+      setError('Hubungkan wallet terlebih dahulu untuk menandatangani bukti.')
       await wallet.connectWallet()
       return
     }
     if (!wallet.isCorrectNetwork) {
-      setError('Pilih jaringan Arbitrum Sepolia sebelum melanjutkan.')
+      setError('Pilih jaringan yang didukung sebelum melanjutkan.')
       await wallet.switchToArbitrumSepolia()
       return
     }
@@ -147,7 +147,7 @@ export function RegistrationWorkspace() {
     <div className="workflow-page">
       <div className="workflow-page-heading">
         <div><p className="workflow-overline">DAFTAR KARYA / 01</p><h1>Catat bukti digital.</h1><p>Hash adalah sidik jari karya Anda. File master tetap di perangkat—yang dicatat hanyalah fingerprint.</p></div>
-        <span className={`mode-badge${mockMode ? ' is-mock' : ' is-live'}`}><span />{mockMode ? 'MODE SIMULASI' : contractAddress ? 'KONTRAK TESTNET' : 'KONTRAK BELUM AKTIF'}</span>
+        <span className="workflow-overline">FINGERPRINT / SHA-256</span>
       </div>
       <StepStatus state={status} />
 
@@ -180,37 +180,33 @@ export function RegistrationWorkspace() {
 
           <section className="workflow-panel" aria-labelledby="wallet-panel-title">
             <div className="workflow-panel-heading"><span className="workflow-section-number">03</span><div><h2 id="wallet-panel-title">Tanda tangani dan catat</h2><p>Dompet membuktikan siapa yang meminta timestamp ini.</p></div></div>
-            {mockMode ? (
-              <div className="workflow-notice notice-warning"><CircleAlert aria-hidden="true" /><span>Simulasi aktif: MetaMask tetap diminta untuk tanda tangan, tetapi transaksi dan catatan hanya berada di memori tab ini. Tidak ada bukti on-chain.</span></div>
-            ) : (
-              <div className="workflow-notice notice-neutral"><ShieldCheck aria-hidden="true" /><span>Jaringan target: {ARBITRUM_SEPOLIA.chainName}. Pencatatan menghasilkan transaksi yang memerlukan gas testnet.</span></div>
-            )}
+            <div className="workflow-notice notice-neutral"><ShieldCheck aria-hidden="true" /><span>Tanda tangan wallet mengaitkan alamat Anda dengan fingerprint. Pencatatan permanen tersedia setelah kontrak registri diaktifkan.</span></div>
             {!mockMode && !contractAddress && (
               <div className="deploy-card">
-                <div><strong>Kontrak belum ter-deploy</strong><p>Deploy kontrak registri ke Arbitrum Sepolia menggunakan dompet Anda. Saldo test ETH diperlukan.</p></div>
+                <div><strong>Kontrak registri belum aktif</strong><p>Deploy kontrak registri menggunakan wallet Anda. Saldo jaringan diperlukan untuk biaya transaksi.</p></div>
                 <button className="workflow-button workflow-button-outline" type="button" onClick={() => void handleDeploy()} disabled={isDeploying || !wallet.isConnected || !wallet.isCorrectNetwork}>
                   {isDeploying ? <LoaderCircle className="workflow-spinner" aria-hidden="true" /> : <WalletCards aria-hidden="true" />}{isDeploying ? 'Menunggu MetaMask…' : 'Deploy kontrak'}
                 </button>
-                {deploymentAddress && <p className="deploy-success" role="status">Kontrak sesi aktif: <code>{deploymentAddress}</code>. Simpan alamat ini di <code>NEXT_PUBLIC_CONTRACT_ADDRESS</code> dan set <code>NEXT_PUBLIC_USE_MOCK_CONTRACT=false</code> agar tetap tersedia setelah refresh.</p>}
+                {deploymentAddress && <p className="deploy-success" role="status">Kontrak aktif: <code>{deploymentAddress}</code>. Simpan alamat ini di <code>NEXT_PUBLIC_CONTRACT_ADDRESS</code> agar tersedia setelah refresh.</p>}
                 {deploymentError && <p className="workflow-inline-error" role="alert">{deploymentError}</p>}
               </div>
             )}
             {!wallet.hasMetaMask && <div className="workflow-notice notice-neutral"><WalletCards aria-hidden="true" /><span>MetaMask diperlukan untuk membuktikan kepemilikan dompet dan memberikan tanda tangan. <a href={METAMASK_DOWNLOAD_URL} target="_blank" rel="noreferrer">Pasang MetaMask <ExternalLink aria-hidden="true" /></a></span></div>}
-            {wallet.isConnected && !wallet.isCorrectNetwork && <div className="workflow-notice notice-error"><CircleAlert aria-hidden="true" /><span>Dompet terhubung di jaringan lain. <button type="button" className="inline-action" onClick={() => void wallet.switchToArbitrumSepolia()}>Ganti ke Arbitrum Sepolia</button></span></div>}
+            {wallet.isConnected && !wallet.isCorrectNetwork && <div className="workflow-notice notice-error"><CircleAlert aria-hidden="true" /><span>Wallet terhubung pada jaringan yang berbeda. <button type="button" className="inline-action" onClick={() => void wallet.switchToArbitrumSepolia()}>Ganti jaringan yang didukung</button></span></div>}
             {wallet.error && <div className="workflow-notice notice-error" role="alert">{wallet.error}<button className="inline-action" type="button" onClick={wallet.clearError}>Tutup</button></div>}
             {error && <div className="workflow-notice notice-error" role="alert">{error}</div>}
             {isBusy && <p className="workflow-status-line" role="status"><LoaderCircle className="workflow-spinner" aria-hidden="true" />{stateLabels[status]}</p>}
             <div className="registration-actions">
               {!wallet.isConnected ? (
-                <button className="workflow-button workflow-button-primary" type="button" onClick={() => void wallet.connectWallet()} disabled={!wallet.hasMetaMask || wallet.isConnecting || !file || !hash}>
-                  {wallet.isConnecting ? <LoaderCircle className="workflow-spinner" aria-hidden="true" /> : <WalletCards aria-hidden="true" />}{wallet.isConnecting ? 'Menghubungkan…' : 'Hubungkan MetaMask'}
+                <button className="workflow-button workflow-button-primary" type="button" onClick={() => void wallet.connectWallet()} disabled={!wallet.hasMetaMask || wallet.isConnecting}>
+                  {wallet.isConnecting ? <LoaderCircle className="workflow-spinner" aria-hidden="true" /> : <WalletCards aria-hidden="true" />}{wallet.isConnecting ? 'Menghubungkan…' : 'Connect Wallet'}
                 </button>
               ) : (
                 <button className="workflow-button workflow-button-primary" type="button" onClick={() => void handleRegistration()} disabled={!canRegister}>
-                  {isBusy ? <LoaderCircle className="workflow-spinner" aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}{mockMode ? 'Tanda tangani bukti simulasi' : 'Tanda tangani & catat'}<ArrowRight aria-hidden="true" />
+                  {isBusy ? <LoaderCircle className="workflow-spinner" aria-hidden="true" /> : <ShieldCheck aria-hidden="true" />}{mockMode ? 'Tanda tangani bukti' : 'Tanda tangani & catat'}<ArrowRight aria-hidden="true" />
                 </button>
               )}
-              <span className="workflow-wallet-caption">{wallet.isConnected ? `${wallet.address?.slice(0, 6)}…${wallet.address?.slice(-4)} · ${wallet.isCorrectNetwork ? ARBITRUM_SEPOLIA.chainName : 'ganti jaringan'}` : 'Perlu dompet kompatibel EVM'}</span>
+              <span className="workflow-wallet-caption">{wallet.isConnected ? `${wallet.address?.slice(0, 6)}…${wallet.address?.slice(-4)} · ${wallet.isCorrectNetwork ? 'jaringan siap' : 'ganti jaringan'}` : 'Perlu wallet kompatibel EVM'}</span>
             </div>
           </section>
         </section>
@@ -219,13 +215,13 @@ export function RegistrationWorkspace() {
           <div className="aside-index">KC / 01</div>
           <h2>Yang dicatat bukan file Anda.</h2>
           <p>SHA-256 menghasilkan sidik jari unik dari file. Tanpa file asli, karya tak bisa direkonstruksi dari fingerprint.</p>
-          <div className="aside-steps"><div><span>01</span><p>File dibaca lokal oleh browser.</p></div><div><span>02</span><p>Hash ditandatangani dompet Anda.</p></div><div><span>03</span><p>Hash dan timestamp dicatat di chain.</p></div></div>
+          <div className="aside-steps"><div><span>01</span><p>File dibaca lokal oleh browser.</p></div><div><span>02</span><p>Hash ditandatangani dompet Anda.</p></div><div><span>03</span><p>Fingerprint dan tanda tangan menyusun bukti digital.</p></div></div>
           <div className="aside-lock"><LockKeyhole aria-hidden="true" /><span>File master tidak pernah meninggalkan perangkat.</span></div>
           <Link href="/verify" className="aside-link">Cara memverifikasi bukti <ArrowRight aria-hidden="true" /></Link>
         </aside>
       </div>
       {receipt && <ReceiptModal record={receipt} onClose={() => setReceipt(null)} />}
-      {status === 'SUCCESS' && <div className="sr-only" role="status">Pendaftaran bukti berhasil.</div>}
+      {status === 'SUCCESS' && <div className="sr-only" role="status">Bukti digital berhasil disiapkan.</div>}
       {status === 'ERROR' && !error && hashError && <div className="sr-only" role="alert">{hashError}</div>}
       <button className="workflow-text-button" type="button" onClick={resetForm}>Mulai ulang proses</button>
     </div>

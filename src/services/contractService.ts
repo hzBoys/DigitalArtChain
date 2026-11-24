@@ -106,7 +106,7 @@ export async function registerProof(
   const provider = getWalletProvider()
   const network = await provider.getNetwork()
   if (network.chainId !== BigInt(ARBITRUM_SEPOLIA.chainId)) {
-    throw new ProofServiceError('Ganti jaringan dompet ke Arbitrum Sepolia sebelum mendaftar.', 'WRONG_NETWORK')
+    throw new ProofServiceError('Ganti wallet ke jaringan yang didukung sebelum mendaftar.', 'WRONG_NETWORK')
   }
   const signer = await provider.getSigner()
   const creator = await signer.getAddress()
@@ -175,7 +175,7 @@ export async function deployProofContract(): Promise<{ address: string; blockNum
   const provider = getWalletProvider()
   const network = await provider.getNetwork()
   if (network.chainId !== BigInt(ARBITRUM_SEPOLIA.chainId)) {
-    throw new ProofServiceError('Pindahkan MetaMask ke Arbitrum Sepolia sebelum deploy kontrak.', 'WRONG_NETWORK')
+    throw new ProofServiceError('Pindahkan wallet ke jaringan yang didukung sebelum deploy kontrak.', 'WRONG_NETWORK')
   }
   const signer = await provider.getSigner()
   const factory = new ContractFactory(artifact.abi, artifact.bytecode, signer)

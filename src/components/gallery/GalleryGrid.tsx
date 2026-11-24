@@ -6,7 +6,6 @@ import { AlertCircle, ArrowRight, ImagePlus, LoaderCircle, RefreshCw, Search } f
 import { useIpfsGallery } from '@/src/controllers/useIpfsGallery'
 import { WORK_CATEGORIES } from '@/src/models/ProofRecord'
 import { ArtworkCard } from '@/src/components/gallery/ArtworkCard'
-import { isMockContract } from '@/src/services/contractService'
 
 export function GalleryGrid() {
   const { records, error, isLoading, refresh } = useIpfsGallery()
@@ -27,8 +26,7 @@ export function GalleryGrid() {
       <div className="gallery-filters" role="group" aria-label="Filter kategori">
         {['Semua', ...WORK_CATEGORIES].map((item) => <button className={`gallery-filter${category === item ? ' is-active' : ''}`} type="button" key={item} onClick={() => setCategory(item)} aria-pressed={category === item}>{item}</button>)}
       </div>
-      {isMockContract() && <div className="workflow-notice notice-warning gallery-notice"><AlertCircle aria-hidden="true" /><span>Mode simulasi: karya hanya terlihat selama tab ini aktif. Untuk galeri on-chain, deploy kontrak lalu atur alamatnya di NEXT_PUBLIC_CONTRACT_ADDRESS dan set <code>NEXT_PUBLIC_USE_MOCK_CONTRACT=false</code>.</span></div>}
-      {error && <div className="workflow-notice notice-error" role="alert"><AlertCircle aria-hidden="true" /><span>{error} Pastikan RPC dan alamat kontrak testnet tersedia.</span></div>}
+      {error && <div className="workflow-notice notice-error" role="alert"><AlertCircle aria-hidden="true" /><span>{error} Pastikan konfigurasi koneksi blockchain tersedia.</span></div>}
       {isLoading && <div className="gallery-state"><LoaderCircle className="workflow-spinner" aria-hidden="true" /><strong>Memuat catatan publik…</strong></div>}
       {!isLoading && !error && filtered.length > 0 && <div className="artwork-grid">{filtered.map((record) => <ArtworkCard key={`${record.fileHash}-${record.txHash ?? 'local'}`} record={record} />)}</div>}
       {!isLoading && !error && records.length === 0 && (

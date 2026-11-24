@@ -8,6 +8,7 @@ import { useWallet } from '@/src/controllers/useWallet'
 import { useFileHasher } from '@/src/controllers/useFileHasher'
 import { FileDropzone } from '@/src/components/registration/FileDropzone'
 import { ReceiptModal } from '@/src/components/registration/ReceiptModal'
+import { ResetConfirmationDialog } from '@/src/components/registration/ResetConfirmationDialog'
 import { StepStatus } from '@/src/components/registration/StepStatus'
 import { METAMASK_DOWNLOAD_URL } from '@/src/models/networkConfig'
 import { WORK_CATEGORIES, type ProofRecord, type RegistrationUiState, type WorkCategory } from '@/src/models/ProofRecord'
@@ -28,6 +29,7 @@ export function RegistrationWorkspace() {
   const { hash, error: hashError, isHashing, hashFile, resetHash } = useFileHasher()
   const [file, setFile] = useState<File | null>(null)
   const [status, setStatus] = useState<RegistrationUiState>('IDLE')
+  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [duplicateRecord, setDuplicateRecord] = useState<ProofRecord | null>(null)
   const [precheckPassed, setPrecheckPassed] = useState(false)
@@ -229,15 +231,13 @@ export function RegistrationWorkspace() {
         </aside>
       </div>
       {receipt && <ReceiptModal record={receipt} onClose={() => setReceipt(null)} />}
+      {isResetConfirmOpen && <ResetConfirmationDialog onCancel={() => setIsResetConfirmOpen(false)} onConfirm={() => { resetForm(); setIsResetConfirmOpen(false) }} />}
       {status === 'SUCCESS' && <div className="sr-only" role="status">Bukti digital berhasil disiapkan.</div>}
       {status === 'ERROR' && !error && hashError && <div className="sr-only" role="alert">{hashError}</div>}
       <button
         className="workflow-button workflow-button-danger"
         type="button"
-        onClick={() => {
-          const confirmed = window.confirm('Mulai ulang proses? File, fingerprint, dan pilihan publikasi akan dihapus. Transaksi yang sudah dikirim tidak dapat dibatalkan.')
-          if (confirmed) resetForm()
-        }}
+        onClick={() => setIsResetConfirmOpen(true)}
         disabled={isBusy || isDeploying}
       ><RotateCcw aria-hidden="true" /> Mulai ulang proses</button>
     </div>

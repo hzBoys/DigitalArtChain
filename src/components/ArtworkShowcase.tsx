@@ -65,7 +65,7 @@ export function ArtworkShowcase() {
               priority={index === 0}
               sizes="(max-width: 640px) 84vw, 370px"
             />
-            <div className="proof-artwork-tags" aria-hidden="true"><span>KARYA DIGITAL</span><span>SHA-256</span></div>
+            <div className="proof-artwork-tags" aria-hidden="true"><span>KARYA DIGITAL</span></div>
             <span className="proof-artwork-index" aria-hidden="true">DAC / 0{index + 1}</span>
           </div>
           <div className="proof-card-info">
@@ -76,7 +76,6 @@ export function ArtworkShowcase() {
             </div>
             <span className="proof-card-icon"><Fingerprint size={20} strokeWidth={1.5} aria-hidden="true" /></span>
           </div>
-          <div className="proof-card-footer"><span>SIDIK JARI KRIPTOGRAFIS</span><span>256-BIT</span></div>
         </article>
       ))}
     </div>

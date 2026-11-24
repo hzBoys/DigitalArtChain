@@ -76,7 +76,7 @@ export async function verifyWork(fileHash: string): Promise<ProofRecord | null> 
 async function uploadGalleryPreview(input: RegistrationInput, creator: string, signature: string): Promise<string> {
   const preview = await createWatermarkedPreview(input.file, input.title, input.category, input.fileHash)
   const form = new FormData()
-  form.set('preview', preview, 'karyachain-preview.webp')
+  form.set('preview', preview, 'digitalartchain-preview.webp')
   form.set('fileHash', input.fileHash)
   form.set('creator', creator)
   form.set('signature', signature)

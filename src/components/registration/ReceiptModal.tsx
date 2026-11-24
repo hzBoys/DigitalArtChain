@@ -19,7 +19,7 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
 
   function downloadJson() {
     const certificate = {
-      schema: 'karyachain-proof-v1',
+      schema: 'digitalartchain-proof-v1',
       network: record.isMock ? 'local-session' : `eip155:${TARGET_CHAIN_ID}`,
       fileHash: record.fileHash,
       creator: record.creator,
@@ -37,7 +37,7 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
     const href = URL.createObjectURL(blob)
     const anchor = document.createElement('a')
     anchor.href = href
-    anchor.download = `karyachain-${record.fileHash.slice(2, 10)}.json`
+    anchor.download = `digitalartchain-${record.fileHash.slice(2, 10)}.json`
     anchor.click()
     window.setTimeout(() => URL.revokeObjectURL(href), 1000)
   }
@@ -45,7 +45,7 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
   return (
     <div className="certificate-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
       <section className="certificate-sheet" role="dialog" aria-modal="true" aria-labelledby="certificate-title">
-        <div className="certificate-topline"><span>KARYACHAIN / SERTIFIKAT</span><span>{record.isMock ? 'SIDIK JARI' : 'BLOCKCHAIN'}</span></div>
+        <div className="certificate-topline"><span>DIGITALARTCHAIN / SERTIFIKAT</span><span>{record.isMock ? 'SIDIK JARI' : 'BLOCKCHAIN'}</span></div>
         <div className="certificate-emblem"><ShieldCheck aria-hidden="true" /></div>
         <p className="workflow-overline">BUKTI DIGITAL</p>
         <h2 id="certificate-title">Sertifikat Bukti Digital</h2>

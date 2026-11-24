@@ -41,7 +41,7 @@ button { font: inherit; }
 .site-header { position: relative; z-index: 10; background: #fff; border-bottom: 1px solid var(--line); }
 .nav-shell { max-width: 1440px; min-height: 82px; margin: 0 auto; padding: 0 6.25%; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
 .brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-space-grotesk), sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.055em; white-space: nowrap; }
-.brand-mark { display: grid; width: 29px; height: 29px; place-items: center; border-radius: 50%; background: var(--ink); color: white; font-family: var(--font-space-grotesk), sans-serif; font-size: 16px; letter-spacing: -0.08em; }
+.brand-mark { display: grid; width: 29px; height: 29px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: var(--ink); color: white; font-family: var(--font-space-grotesk), sans-serif; font-size: 8px; font-weight: 700; letter-spacing: -0.03em; }
 .brand-period { color: #9bad00; }
 .desktop-nav { display: flex; align-items: center; gap: clamp(22px, 3vw, 46px); }
 .nav-link { color: #71717a; font-size: 12px; font-weight: 500; transition: color .2s ease; }
@@ -157,7 +157,7 @@ button { font: inherit; }
 .closing-section .button-primary { border-color: var(--ink); background: var(--ink); }
 .site-footer { display: flex; min-height: 90px; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 6.25%; color: #71717a; font: 500 9px var(--font-mono), monospace; letter-spacing: .035em; }
 .footer-brand { color: var(--ink); font-family: var(--font-space-grotesk), sans-serif; font-size: 16px; letter-spacing: -.05em; }
-.footer-brand .brand-mark { width: 24px; height: 24px; font-size: 13px; }
+.footer-brand .brand-mark { width: 24px; height: 24px; font-size: 6.5px; }
 
 @media (min-width: 1441px) { .hero-section { padding-right: calc((100vw - 1135px) / 2); padding-left: calc((100vw - 1135px) / 2); } }
 @media (max-width: 900px) {
@@ -171,7 +171,7 @@ button { font: inherit; }
 }
 @media (max-width: 640px) {
   .nav-shell { min-height: 70px; padding: 0 20px; gap: 12px; }
-  .brand { gap: 7px; font-size: 17px; }
+  .brand { gap: 7px; font-size: 15px; }
   .brand-mark { width: 27px; height: 27px; }
   .desktop-nav { display: none; }
   .nav-actions { margin-left: auto; gap: 8px; }
@@ -209,6 +209,13 @@ button { font: inherit; }
   .closing-section { min-height: 310px; align-items: flex-start; flex-direction: column; justify-content: center; padding: 44px 24px; }
   .closing-section h2 { font-size: 54px; }
   .site-footer { align-items: flex-start; flex-direction: column; gap: 12px; padding: 24px; }
+}
+@media (max-width: 380px) {
+  .nav-shell { padding: 0 12px; gap: 8px; }
+  .brand { gap: 5px; font-size: 12px; }
+  .brand-mark { width: 24px; height: 24px; font-size: 6.5px; }
+  .connect-button { min-height: 34px; gap: 5px; padding: 0 8px; font-size: 9px; }
+  .mobile-menu { width: 32px; height: 32px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }

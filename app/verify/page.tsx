@@ -5,7 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { VerifierCard } from '@/src/components/verification/VerifierCard'
 
 export const metadata: Metadata = {
-  title: 'Verifikasi Bukti — KaryaChain',
+  title: 'Verifikasi Bukti — DigitalArtChain',
   description: 'Verifikasi timestamp bukti karya digital dengan fingerprint SHA-256 tanpa mengunggah file master.',
 }
 

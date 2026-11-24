@@ -54,8 +54,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="closing-section" id="mulai"><div><span className="closing-mark">KC / 01</span><h2>Karya Anda.<br />Waktu Anda.</h2></div><Link className="button-primary" href="/register">Siap untuk memulai <ArrowRight size={17} aria-hidden="true" /></Link></section>
-      <footer className="site-footer"><Link className="brand footer-brand" href="/"><span className="brand-mark" aria-hidden="true">K</span><span>KaryaChain<span className="brand-period">.</span></span></Link><span>Proof of existence untuk karya digital.</span></footer>
+      <section className="closing-section" id="mulai"><div><span className="closing-mark">DAC / 01</span><h2>Karya Anda.<br />Waktu Anda.</h2></div><Link className="button-primary" href="/register">Siap untuk memulai <ArrowRight size={17} aria-hidden="true" /></Link></section>
+      <footer className="site-footer"><Link className="brand footer-brand" href="/"><span className="brand-mark" aria-hidden="true">DAC</span><span>DigitalArtChain<span className="brand-period">.</span></span></Link><span>Proof of existence untuk karya digital.</span></footer>
     </main>
   )
 }

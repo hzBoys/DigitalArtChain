@@ -66,7 +66,7 @@ export function ArtworkShowcase() {
               sizes="(max-width: 640px) 84vw, 370px"
             />
             <div className="proof-artwork-tags" aria-hidden="true"><span>KARYA DIGITAL</span><span>SHA-256</span></div>
-            <span className="proof-artwork-index" aria-hidden="true">KC / 0{index + 1}</span>
+            <span className="proof-artwork-index" aria-hidden="true">DAC / 0{index + 1}</span>
           </div>
           <div className="proof-card-info">
             <div className="proof-card-title-wrap">

@@ -5,7 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { RegistrationWorkspace } from '@/src/components/registration/RegistrationWorkspace'
 
 export const metadata: Metadata = {
-  title: 'Daftarkan Karya — KaryaChain',
+  title: 'Daftarkan Karya — DigitalArtChain',
   description: 'Hitung fingerprint SHA-256 secara lokal dan siapkan bukti waktu untuk karya digital Anda.'
 }
 

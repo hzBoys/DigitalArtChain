@@ -24,9 +24,9 @@ export function Navbar() {
   return (
     <header className="site-header">
       <div className="nav-shell">
-        <Link className="brand" href="/" aria-label="KaryaChain Beranda">
-          <span className="brand-mark" aria-hidden="true">K</span>
-          <span>KaryaChain<span className="brand-period">.</span></span>
+        <Link className="brand" href="/" aria-label="DigitalArtChain Beranda">
+          <span className="brand-mark" aria-hidden="true">DAC</span>
+          <span>DigitalArtChain<span className="brand-period">.</span></span>
         </Link>
         <nav className="desktop-nav" aria-label="Navigasi utama">
           {navLinks.map(({ href, label, active }) => <Link className={`nav-link${active ? ' active' : ''}`} href={href} key={href} aria-current={active ? 'page' : undefined}>{label}</Link>)}

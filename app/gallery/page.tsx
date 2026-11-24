@@ -5,7 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { GalleryGrid } from '@/src/components/gallery/GalleryGrid'
 
 export const metadata: Metadata = {
-  title: 'Galeri Karya — KaryaChain',
+  title: 'Galeri Karya — DigitalArtChain',
   description: 'Jelajahi preview karya yang kreator pilih untuk dibagikan. File master tetap privat.',
 }
 

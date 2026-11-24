@@ -90,8 +90,8 @@ export async function POST(request: Request) {
   }
 
   const pinataForm = new FormData()
-  pinataForm.set('file', preview, 'karyachain-watermarked-preview.webp')
-  pinataForm.set('pinataMetadata', JSON.stringify({ name: `KaryaChain preview ${fileHash.slice(2, 10)}` }))
+  pinataForm.set('file', preview, 'digitalartchain-watermarked-preview.webp')
+  pinataForm.set('pinataMetadata', JSON.stringify({ name: `DigitalArtChain preview ${fileHash.slice(2, 10)}` }))
   pinataForm.set('pinataOptions', JSON.stringify({ cidVersion: 1 }))
 
   try {

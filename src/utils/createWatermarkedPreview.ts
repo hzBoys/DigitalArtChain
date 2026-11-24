@@ -106,7 +106,7 @@ export async function createWatermarkedPreview(
   context.fillStyle = 'rgba(10, 10, 10, 0.32)'
   context.font = '700 21px sans-serif'
   context.textAlign = 'center'
-  context.fillText('KARYACHAIN · VERIFIED PREVIEW', 0, 0, width * 1.3)
+  context.fillText('DIGITALARTCHAIN · VERIFIED PREVIEW', 0, 0, width * 1.3)
   context.restore()
 
   const footerHeight = Math.max(38, Math.round(height * 0.075))

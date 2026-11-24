@@ -220,7 +220,7 @@ export function RegistrationWorkspace() {
         </section>
 
         <aside className="registration-aside" aria-label="Informasi dan privasi">
-          <div className="aside-index">KC / 01</div>
+          <div className="aside-index">DAC / 01</div>
           <h2>Yang dicatat bukan file Anda.</h2>
           <p>SHA-256 menghasilkan sidik jari unik dari file. Tanpa file asli, karya tak bisa direkonstruksi dari fingerprint.</p>
           <div className="aside-steps"><div><span>01</span><p>File dibaca lokal oleh browser.</p></div><div><span>02</span><p>Hash ditandatangani dompet Anda.</p></div><div><span>03</span><p>Fingerprint dan tanda tangan menyusun bukti digital.</p></div></div>

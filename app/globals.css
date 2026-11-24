@@ -104,6 +104,7 @@ button { font: inherit; }
 .proof-card-title-wrap { display: grid; gap: 5px; }
 .proof-card-label { color: #71717a; font: 500 8px var(--font-mono), monospace; letter-spacing: .1em; }
 .proof-card-title-wrap strong { font: 600 20px var(--font-space-grotesk), sans-serif; letter-spacing: -.045em; }
+.proof-card-artist { color: #71717a; font: 500 10px var(--font-mono), monospace; letter-spacing: .02em; }
 .proof-card-icon { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border: 1px solid var(--ink); background: var(--acid); }
 .proof-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 5px 3px; border-top: 1px solid var(--line); color: #71717a; font: 500 8px var(--font-mono), monospace; letter-spacing: .04em; }
 .scroll-cue { position: absolute; bottom: 25px; left: 10.6%; display: flex; align-items: center; gap: 9px; color: #a1a1aa; font: 500 8px var(--font-mono), monospace; letter-spacing: .1em; }

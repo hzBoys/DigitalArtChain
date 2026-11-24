@@ -26,6 +26,7 @@ export interface UseWalletReturn {
   connectWallet: () => Promise<void>
   switchToArbitrumSepolia: () => Promise<void>
   disconnectWallet: () => void
+  clearError: () => void
 }
 
 function getProvider() {
@@ -126,6 +127,7 @@ export function useWallet(): UseWalletReturn {
     setAddress(null)
     setError(null)
   }, [])
+  const clearError = useCallback(() => setError(null), [])
 
   return {
     address,
@@ -138,5 +140,6 @@ export function useWallet(): UseWalletReturn {
     connectWallet,
     switchToArbitrumSepolia,
     disconnectWallet,
+    clearError,
   }
 }

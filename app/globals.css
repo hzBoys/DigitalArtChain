@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
+@import '../src/styles/workflows.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -102,6 +103,18 @@ button { font: inherit; }
 .principle-top svg { color: var(--ink); }
 .principle-card h2 { margin: 30px 0 7px; font-family: var(--font-space-grotesk), sans-serif; font-size: 17px; letter-spacing: -.04em; }
 .principle-card p { max-width: 240px; margin: 0; color: var(--muted-ink); font-size: 11px; line-height: 1.7; }
+.principle-summary { display: block; cursor: pointer; list-style: none; }
+.principle-summary::-webkit-details-marker { display: none; }
+.principle-summary:focus-visible { outline: 2px solid var(--acid); outline-offset: 5px; }
+.principle-toggle-label { display: flex; align-items: center; gap: 6px; margin-top: 16px; color: var(--ink); font-size: 9px; font-weight: 600; }
+.principle-toggle-label svg { width: 14px; height: 14px; transition: transform .18s ease; }
+.principle-toggle-close { display: none; }
+.principle-card[open] { background: var(--paper); }
+.principle-card[open] .principle-toggle-open { display: none; }
+.principle-card[open] .principle-toggle-close { display: inline; }
+.principle-card[open] .principle-expanded-copy { max-width: none; margin: 13px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.principle-learn-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 3px; color: var(--ink); font-size: 10px; font-weight: 600; }
+.principle-learn-link svg { width: 14px; height: 14px; }
 .process-section { padding-top: 9px; padding-bottom: 100px; }
 .process-heading { display: flex; justify-content: space-between; align-items: end; gap: 35px; }
 .process-heading > div { width: min(100%, 500px); }

@@ -4,14 +4,14 @@ import { Navbar } from '@/components/layout/Navbar'
 import { ArtworkShowcase } from '@/src/components/ArtworkShowcase'
 
 const principles = [
-  { number: '01', title: 'Privat secara default', detail: 'File asli tak pernah meninggalkan perangkat Anda.', expanded: 'SHA-256 dihitung langsung di browser. Blockchain hanya menerima fingerprint 32-byte—bukan gambar, audio, video, ataupun dokumen master.', icon: ShieldCheck },
+  { number: '01', title: 'Privat secara default', detail: 'File asli tak pernah meninggalkan perangkat Anda.', expanded: 'Fingerprint unik dibuat di perangkat Anda. Blockchain hanya menerima sidik jari 32-byte—bukan gambar, audio, video, ataupun dokumen master.', icon: ShieldCheck },
   { number: '02', title: 'Bukti yang dapat diverifikasi', detail: 'Sidik jari digital dapat dicatat di blockchain publik.', expanded: 'Siapa pun dapat menghitung ulang hash dari file yang diberikan dan membandingkannya dengan catatan timestamp tanpa membuat akun atau menghubungkan wallet.', icon: Fingerprint },
   { number: '03', title: 'Karya tetap milik Anda', detail: 'Tanpa perantara, tanpa token, tanpa klaim berlebihan.', expanded: 'Catatan kriptografis membantu menunjukkan keberadaan dan waktu sebuah karya. Ini bukan pengganti pendaftaran hak cipta resmi atau keputusan hukum kepemilikan.', icon: Sparkles },
 ]
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="home-page">
       <Navbar />
       <section className="hero-section" id="top">
         <div className="hero-grid" aria-hidden="true" />
@@ -23,7 +23,6 @@ export default function HomePage() {
             <Link className="button-primary" href="/register">Mulai mencatat <ArrowRight size={17} aria-hidden="true" /></Link>
             <Link className="button-secondary" href="#cara-kerja">Pelajari cara kerja <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
-          <div className="hero-footnote"><Fingerprint size={14} aria-hidden="true" /> SHA-256 dihitung langsung di browser</div>
         </div>
         <ArtworkShowcase />
         <a className="scroll-cue" href="#cara-kerja" aria-label="Gulir ke cara kerja"><ArrowDown size={15} /> SCROLL TO EXPLORE</a>
@@ -56,7 +55,7 @@ export default function HomePage() {
       </section>
 
       <section className="closing-section" id="mulai"><div><span className="closing-mark">KC / 01</span><h2>Karya Anda.<br />Waktu Anda.</h2></div><Link className="button-primary" href="/register">Siap untuk memulai <ArrowRight size={17} aria-hidden="true" /></Link></section>
-      <footer className="site-footer"><Link className="brand footer-brand" href="/"><span className="brand-mark" aria-hidden="true">K</span><span>KaryaChain<span className="brand-period">.</span></span></Link><span>Proof of existence untuk karya digital.</span><span>BUKTI DIGITAL · SHA-256</span></footer>
+      <footer className="site-footer"><Link className="brand footer-brand" href="/"><span className="brand-mark" aria-hidden="true">K</span><span>KaryaChain<span className="brand-period">.</span></span></Link><span>Proof of existence untuk karya digital.</span></footer>
     </main>
   )
 }

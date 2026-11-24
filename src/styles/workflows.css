@@ -188,6 +188,8 @@
 .workflow-button:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #e8ff00; }
 .workflow-button:disabled { cursor: not-allowed; opacity: .54; }
 .workflow-button-primary { border-color: #111; background: #111; color: #fff; }
+.workflow-button-danger { border-color: #b42318; background: #b42318; color: #fff; }
+.workflow-button-danger:hover:not(:disabled) { box-shadow: 3px 3px 0 #fecaca; }
 .workflow-button-outline { border-color: #171717; background: #fff; color: #111; }
 .workflow-button-text { border-color: transparent; background: transparent; color: #55555f; }
 .workflow-button-text:hover { text-decoration: underline; text-underline-offset: 3px; }

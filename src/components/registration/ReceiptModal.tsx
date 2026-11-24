@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { ArrowUpRight, Check, Copy, Download, Printer, ShieldCheck } from 'lucide-react'
 import type { ProofRecord } from '@/src/models/ProofRecord'
 import { TARGET_CHAIN_ID } from '@/src/models/networkConfig'
@@ -49,6 +50,11 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
         <p className="workflow-overline">BUKTI DIGITAL</p>
         <h2 id="certificate-title">Sertifikat Bukti Digital</h2>
         <p className="certificate-intro">Sertifikat merangkum sidik jari kriptografi dan waktu pencatatan. File master tidak disertakan.</p>
+        {record.ipfsCid ? (
+          <div className="workflow-notice notice-neutral" role="status">Preview ber-watermark berhasil dibagikan. Karya ini sekarang tersedia di Galeri Publik.</div>
+        ) : (
+          <div className="workflow-notice notice-neutral" role="status">Bukti berhasil dicatat secara privat dan tidak ditampilkan di Galeri Publik.</div>
+        )}
         {record.isMock && <div className="workflow-notice notice-neutral" role="status">Fingerprint dan tanda tangan wallet tersimpan dalam ringkasan bukti ini.</div>}
         <dl className="certificate-data">
           <div><dt>SHA-256 / bytes32</dt><dd><code>{record.fileHash}</code><button className="workflow-icon-button" type="button" onClick={copyHash} aria-label="Salin sidik jari"><Copy aria-hidden="true" /></button></dd></div>
@@ -61,6 +67,7 @@ export function ReceiptModal({ record, onClose }: { record: ProofRecord; onClose
         <p className="certificate-disclaimer">Ringkasan ini menunjukkan fingerprint, tanda tangan, dan waktu digital. Bukan keputusan hukum atau sertifikat resmi DJKI.</p>
         <div className="certificate-actions">
           <button className="workflow-button workflow-button-primary" type="button" onClick={downloadJson}><Download aria-hidden="true" /> Unduh JSON</button>
+          {record.ipfsCid && <Link className="workflow-button workflow-button-outline" href="/gallery">Lihat di Galeri <ArrowUpRight aria-hidden="true" /></Link>}
           <button className="workflow-button workflow-button-outline" type="button" onClick={() => window.print()}><Printer aria-hidden="true" /> Simpan PDF</button>
           <button className="workflow-button workflow-button-text" type="button" onClick={onClose}>Tutup</button>
         </div>

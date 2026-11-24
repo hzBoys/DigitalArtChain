@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useSWRConfig } from 'swr'
 import Link from 'next/link'
-import { ArrowRight, Check, CircleAlert, ExternalLink, LoaderCircle, LockKeyhole, ShieldCheck, WalletCards } from 'lucide-react'
+import { ArrowRight, Check, CircleAlert, ExternalLink, LoaderCircle, LockKeyhole, RotateCcw, ShieldCheck, WalletCards } from 'lucide-react'
 import { useWallet } from '@/src/controllers/useWallet'
 import { useFileHasher } from '@/src/controllers/useFileHasher'
 import { FileDropzone } from '@/src/components/registration/FileDropzone'
@@ -23,6 +24,7 @@ const stateLabels: Partial<Record<RegistrationUiState, string>> = {
 
 export function RegistrationWorkspace() {
   const wallet = useWallet()
+  const { mutate } = useSWRConfig()
   const { hash, error: hashError, isHashing, hashFile, resetHash } = useFileHasher()
   const [file, setFile] = useState<File | null>(null)
   const [status, setStatus] = useState<RegistrationUiState>('IDLE')
@@ -92,6 +94,12 @@ export function RegistrationWorkspace() {
     try {
       const record = await registerProof({ file, fileHash: hash, title, category, publishToGallery }, setStatus)
       setReceipt(record)
+      if (record.ipfsCid) {
+        void mutate<ProofRecord[]>('karyachain:public-gallery', (records = []) => [
+          record,
+          ...records.filter((existing) => existing.fileHash !== record.fileHash),
+        ], { revalidate: true })
+      }
       setStatus('SUCCESS')
     } catch (registrationError) {
       if (registrationError instanceof ProofServiceError && registrationError.code === 'DUPLICATE') {
@@ -167,7 +175,7 @@ export function RegistrationWorkspace() {
             <label className="workflow-toggle-row">
               <input type="checkbox" checked={publishToGallery} onChange={(event) => setPublishToGallery(event.target.checked)} />
               <span className="workflow-toggle-track" aria-hidden="true" />
-              <span className="workflow-toggle-copy"><strong>Tampilkan preview di Galeri Publik</strong><span>Opsional · hanya preview ter-watermark yang diunggah, bukan file master.</span></span>
+              <span className="workflow-toggle-copy"><strong>Tampilkan preview di Galeri Publik</strong><span>Setelah pencatatan berhasil, preview ber-watermark akan muncul di Galeri. File master tidak pernah diunggah.</span></span>
             </label>
             {publishToGallery && (
               <div className="workflow-metadata-fields">
@@ -223,7 +231,15 @@ export function RegistrationWorkspace() {
       {receipt && <ReceiptModal record={receipt} onClose={() => setReceipt(null)} />}
       {status === 'SUCCESS' && <div className="sr-only" role="status">Bukti digital berhasil disiapkan.</div>}
       {status === 'ERROR' && !error && hashError && <div className="sr-only" role="alert">{hashError}</div>}
-      <button className="workflow-text-button" type="button" onClick={resetForm}>Mulai ulang proses</button>
+      <button
+        className="workflow-button workflow-button-danger"
+        type="button"
+        onClick={() => {
+          const confirmed = window.confirm('Mulai ulang proses? File, fingerprint, dan pilihan publikasi akan dihapus. Transaksi yang sudah dikirim tidak dapat dibatalkan.')
+          if (confirmed) resetForm()
+        }}
+        disabled={isBusy || isDeploying}
+      ><RotateCcw aria-hidden="true" /> Mulai ulang proses</button>
     </div>
   )
 }

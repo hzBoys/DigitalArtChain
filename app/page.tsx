@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowDown, ArrowRight, ArrowUpRight, Fingerprint, ShieldCheck, Sparkles } from 'lucide-react'
 import { Navbar } from '@/components/layout/Navbar'
+import { ArtworkShowcase } from '@/src/components/ArtworkShowcase'
 
 const principles = [
   { number: '01', title: 'Privat secara default', detail: 'File asli tak pernah meninggalkan perangkat Anda.', expanded: 'SHA-256 dihitung langsung di browser. Blockchain hanya menerima fingerprint 32-byte—bukan gambar, audio, video, ataupun dokumen master.', icon: ShieldCheck },
@@ -25,18 +25,7 @@ export default function HomePage() {
           </div>
           <div className="hero-footnote"><Fingerprint size={14} aria-hidden="true" /> SHA-256 dihitung langsung di browser</div>
         </div>
-        <aside className="proof-card" aria-label="Karya digital Ashina oleh @exhozt_">
-          <div className="proof-artwork">
-            <Image className="proof-artwork-image" src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ashina-%E1%B4%98%CA%80%C9%AA%C9%B4%E1%B4%9B%EA%9C%B1%20-%20%C9%B4%EA%9C%B0%E1%B4%9B%20-%20%E1%B4%8D%E1%B4%8F%CA%80%E1%B4%87%CA%9F%C9%AA%C9%B4%E1%B4%8B%20%E1%B4%8F%C9%B4%20%E1%B4%8D%CA%8F%20%CA%99%C9%AA%E1%B4%8F%40exhozt%C2%A0%40exhozt_swipe%20for%20full._lofiart_animeaesthetic_p-xM7fFpUIDDbVTJiLt9pvlSPpc3MEi9.jpg" alt="Ashina — ilustrasi digital pagoda di bawah langit senja biru dan pohon sakura ungu, karya @exhozt_" fill priority sizes="(max-width: 640px) 90vw, 400px" />
-            <div className="proof-artwork-tags" aria-hidden="true"><span>KARYA DIGITAL</span><span>SHA-256</span></div>
-            <span className="proof-artwork-index" aria-hidden="true">KC / 01</span>
-          </div>
-          <div className="proof-card-info">
-            <div className="proof-card-title-wrap"><span className="proof-card-label">IDENTITAS KARYA</span><strong>Ashina</strong><span className="proof-card-artist">Karya oleh @exhozt_</span></div>
-            <span className="proof-card-icon"><Fingerprint size={20} strokeWidth={1.5} aria-hidden="true" /></span>
-          </div>
-          <div className="proof-card-footer"><span>SIDIK JARI KRIPTOGRAFIS</span><span>256-BIT</span></div>
-        </aside>
+        <ArtworkShowcase />
         <a className="scroll-cue" href="#cara-kerja" aria-label="Gulir ke cara kerja"><ArrowDown size={15} /> SCROLL TO EXPLORE</a>
       </section>
 

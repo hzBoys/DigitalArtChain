@@ -26,6 +26,16 @@ export interface UseWalletReturn {
   connectWallet: () => Promise<void>
   switchToArbitrumSepolia: () => Promise<void>
   disconnectWallet: () => void
+  clearError: () => void
+}
+
+type WalletStateUpdate = Partial<{ address: string | null; chainId: number | null }>
+
+const WALLET_STATE_EVENT = 'karyachain:wallet-state'
+
+function broadcastWalletState(update: WalletStateUpdate) {
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(new CustomEvent<WalletStateUpdate>(WALLET_STATE_EVENT, { detail: update }))
 }
 
 function getProvider() {
@@ -47,9 +57,16 @@ export function useWallet(): UseWalletReturn {
   const [hasMetaMask, setHasMetaMask] = useState(false)
 
   useEffect(() => {
+    const handleWalletState = (event: Event) => {
+      const update = (event as CustomEvent<WalletStateUpdate>).detail
+      if ('address' in update) setAddress(update.address ?? null)
+      if ('chainId' in update) setChainId(update.chainId ?? null)
+    }
+    window.addEventListener(WALLET_STATE_EVENT, handleWalletState)
+
     const provider = getProvider()
     setHasMetaMask(Boolean(provider))
-    if (!provider) return
+    if (!provider) return () => window.removeEventListener(WALLET_STATE_EVENT, handleWalletState)
 
     let active = true
     void Promise.all([
@@ -76,6 +93,7 @@ export function useWallet(): UseWalletReturn {
     provider.on('chainChanged', handleChainChanged)
     return () => {
       active = false
+      window.removeEventListener(WALLET_STATE_EVENT, handleWalletState)
       provider.removeListener('accountsChanged', handleAccountsChanged)
       provider.removeListener('chainChanged', handleChainChanged)
     }
@@ -96,6 +114,7 @@ export function useWallet(): UseWalletReturn {
       await provider.request({ method: 'wallet_addEthereumChain', params: [ARBITRUM_SEPOLIA] })
     }
     setChainId(TARGET_CHAIN_ID)
+    broadcastWalletState({ chainId: TARGET_CHAIN_ID })
   }, [])
 
   const connectWallet = useCallback(async () => {
@@ -111,21 +130,22 @@ export function useWallet(): UseWalletReturn {
       const accounts = await provider.request({ method: 'eth_requestAccounts' }) as string[]
       setAddress(accounts[0] ?? null)
       const currentChain = await provider.request({ method: 'eth_chainId' })
-      setChainId(Number.parseInt(String(currentChain), 16))
-      if (Number.parseInt(String(currentChain), 16) !== TARGET_CHAIN_ID) {
-        await switchToArbitrumSepolia()
-      }
+      const nextChainId = Number.parseInt(String(currentChain), 16)
+      setChainId(nextChainId)
+      broadcastWalletState({ address: accounts[0] ?? null, chainId: nextChainId })
     } catch (connectError) {
       setError(friendlyError(connectError))
     } finally {
       setIsConnecting(false)
     }
-  }, [switchToArbitrumSepolia])
+  }, [])
 
   const disconnectWallet = useCallback(() => {
     setAddress(null)
     setError(null)
+    broadcastWalletState({ address: null })
   }, [])
+  const clearError = useCallback(() => setError(null), [])
 
   return {
     address,
@@ -138,5 +158,6 @@ export function useWallet(): UseWalletReturn {
     connectWallet,
     switchToArbitrumSepolia,
     disconnectWallet,
+    clearError,
   }
 }

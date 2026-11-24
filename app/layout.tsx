@@ -8,24 +8,18 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space
 const jetBrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono' })
 
 export const metadata: Metadata = {
-  title: 'KaryaChain — Bukti Digital, Tanpa Perantara',
-  description: 'Catat sidik jari kriptografi karya digital di Arbitrum. File asli tetap privat di perangkat Anda; bukti dapat diverifikasi publik.',
-  generator: 'KaryaChain',
+  title: 'DigitalArtChain — Bukti Digital, Tanpa Perantara',
+  description: 'Buat bukti digital dengan fingerprint SHA-256. File asli tetap privat di perangkat; identitas karya dapat diverifikasi.',
+  generator: 'DigitalArtChain',
+  openGraph: {
+    title: 'DigitalArtChain — Bukti Digital, Tanpa Perantara',
+    description: 'Buat bukti digital dengan fingerprint SHA-256. File asli tetap privat di perangkat; identitas karya dapat diverifikasi.',
+    siteName: 'DigitalArtChain',
+    locale: 'id_ID',
+    type: 'website',
+  },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
     apple: '/apple-icon.png',
   },
 }

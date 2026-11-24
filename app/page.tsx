@@ -25,7 +25,6 @@ export default function HomePage() {
           </div>
         </div>
         <ArtworkShowcase />
-        <a className="scroll-cue" href="#cara-kerja" aria-label="Gulir ke cara kerja"><ArrowDown size={15} /> SCROLL TO EXPLORE</a>
       </section>
 
       <section className="principles-section" id="tentang">

@@ -93,7 +93,7 @@ button { font: inherit; }
 .button-secondary { min-height: auto; color: #3f3f46; }
 .button-secondary:hover { text-decoration: underline; text-underline-offset: 4px; }
 .hero-footnote { display: flex; align-items: center; gap: 10px; margin-top: 55px; color: #71717a; font: 500 9px var(--font-mono), monospace; letter-spacing: .02em; }
-.proof-card-stack { position: relative; width: min(100%, 430px); aspect-ratio: .84; justify-self: center; perspective: 1100px; touch-action: pan-y; }
+.proof-card-stack { position: relative; width: min(100%, 360px); aspect-ratio: .84; justify-self: center; perspective: 1100px; touch-action: pan-y; }
 .proof-card { position: absolute; top: 4%; left: 8%; width: 84%; padding: 12px; border: 1.5px solid var(--ink); background: #fff; box-shadow: 7px 7px 0 var(--ink); transform-style: preserve-3d; transition: transform 180ms ease-out, box-shadow 180ms ease-out; will-change: transform; }
 .proof-card-layer-1 { z-index: 3; transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotateZ(1.2deg); }
 .proof-card-layer-2 { z-index: 2; top: 9%; left: 0; transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotateZ(-8deg) translateX(-6%); }
@@ -112,6 +112,7 @@ button { font: inherit; }
 .proof-card-artist { color: #71717a; font: 500 10px var(--font-mono), monospace; letter-spacing: .02em; }
 .proof-card-icon { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border: 1px solid var(--ink); background: var(--acid); }
 .proof-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 5px 3px; border-top: 1px solid var(--line); color: #71717a; font: 500 8px var(--font-mono), monospace; letter-spacing: .04em; }
+.proof-card-footer span { white-space: nowrap; }
 .scroll-cue { position: absolute; bottom: 25px; left: 10.6%; display: flex; align-items: center; gap: 9px; color: #a1a1aa; font: 500 8px var(--font-mono), monospace; letter-spacing: .1em; }
 
 .principles-section, .process-section { max-width: 1440px; margin: 0 auto; padding: 58px 10.6% 92px; }
@@ -161,7 +162,7 @@ button { font: inherit; }
   .nav-shell { padding: 0 5%; }
     .hero-section { min-height: 590px; padding: 76px 7% 83px; gap: 35px; }
   .hero-content h1 { font-size: clamp(46px, 7vw, 67px); }
-  .proof-card-stack { max-width: 380px; }
+  .proof-card-stack { max-width: 330px; }
   .principles-section, .process-section { padding-right: 7%; padding-left: 7%; }
   .closing-section { padding-right: 7%; padding-left: 7%; }
   .scroll-cue { left: 7%; }
@@ -187,7 +188,7 @@ button { font: inherit; }
   .button-primary, .button-secondary { min-height: 44px; font-size: 11px; }
   .button-secondary { min-height: auto; }
   .hero-footnote { margin-top: 32px; font-size: 8px; }
-  .proof-card-stack { width: min(100%, 370px); }
+  .proof-card-stack { width: min(100%, 320px); }
   .proof-card { padding: 9px; }
   .proof-artwork-tags { top: 9px; right: 9px; left: 9px; }
   .proof-artwork-tags span { padding: 5px 6px; font-size: 7px; }
